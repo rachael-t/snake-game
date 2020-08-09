@@ -4,18 +4,13 @@ const score = document.getElementById('score');
 let squares = [];
 let currentSnake = [2,1,0];
 let direction = 1;
-let width = 10;
+const width = 10;
 
 function createGrid() {
-    // create 100 of these elements with a for loop
-    for (let i=0; i < 100; i++) {
-        // create element
+    for (let i=0; i < width*width; i++) {
         const square = document.createElement('div')
-        // add styling to these element
         square.classList.add('square')
-        // put the element into our grid
         grid.appendChild(square)
-        // push it into a new squares array
         squares.push(square)
     }
 };
@@ -25,25 +20,25 @@ createGrid();
 currentSnake.forEach(index => squares[index].classList.add('snake'));
 
 function move() {
-    // we need to remove the last element from currentSnake array
+    if ( 
+        (currentSnake[0] + width >= width*width && direction === width) ||
+        (currentSnake[0] % width === width-1 && direction === 1) ||
+        (currentSnake[0] % width === 0 && direction === -1) ||
+        (currentSnake[0] - width < 0 && direction === -width) || 
+        squares[currentSnake[0] + direction].classList.contains('snake')
+        ) {
+        return clearInterval(timerId)
+    }
+
     const tail = currentSnake.pop();
-    // remove styling from last element
     squares[tail].classList.remove('snake');
-    // need to add square in direction we are heading
     currentSnake.unshift(currentSnake[0] + direction);
-    // add styling so we can see it
     squares[currentSnake[0]].classList.add('snake');
 };
 
 move();
 
 let timerId = setInterval(move, 1000);
-
-// key codes: 
-// 39 is right arrow
-// 38 is up arrow
-// 37 is left arrow
-// 40 is down arrow
 
 function control(e) {
     if (e.keyCode === 39) {
