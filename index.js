@@ -1,10 +1,20 @@
-const grid = document.querySelector(".grid");
-const startButton = document.getElementById("start");
-const score = document.getElementById("score");
+const grid = document.querySelector('.grid');
+const startButton = document.getElementById('start');
+const score = document.getElementById('score');
+let squares = []
 
 function createGrid() {
-    // create elements that will be nested within grid
-    // create 100 of these elements 
-    // add styling to these elements
-    // create array of squares
+    // create 100 of these elements with a for loop
+    for (let i=0; i < 100; i++) {
+        // create element
+        const square = document.createElement('div')
+        // add styling to these element
+        square.classList.add('square')
+        // put the element into our grid
+        grid.appendChild(square)
+        // push it into a new squares array
+        squares.push(square)
+    }
 }
+
+createGrid();
