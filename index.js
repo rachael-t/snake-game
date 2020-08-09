@@ -4,6 +4,7 @@ const score = document.getElementById('score');
 let squares = [];
 let currentSnake = [2,1,0];
 let direction = 1;
+let width = 10;
 
 function createGrid() {
     // create 100 of these elements with a for loop
@@ -29,9 +30,31 @@ function move() {
     // remove styling from last element
     squares[tail].classList.remove('snake');
     // need to add square in direction we are heading
-    const head = currentSnake.unshift(currentSnake[0] + direction);
+    currentSnake.unshift(currentSnake[0] + direction);
     // add styling so we can see it
-    squares[head].classList.add('snake');
+    squares[currentSnake[0]].classList.add('snake');
 };
 
 move();
+
+let timerId = setInterval(move, 1000);
+
+// key codes: 
+// 39 is right arrow
+// 38 is up arrow
+// 37 is left arrow
+// 40 is down arrow
+
+function control(e) {
+    if (e.keyCode === 39) {
+        direction = 1
+    } else if (e.keyCode === 38) {
+        direction = -width
+    } else if (e.keyCode === 37) {
+        direction = -1
+    } else if (e.keyCode === 40) {
+        direction = +width
+    }
+}
+
+document.addEventListener('keyup', control)
